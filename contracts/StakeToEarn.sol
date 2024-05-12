@@ -8,8 +8,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 error StakeToEarn_ERC20TransferFailed();
-error Constructor_ERC20ApproveFailed();
-error Constructor_ERC20TransferFailed();
 
 contract StakeToEarn is ReentrancyGuard {
     uint256 public constant TOTAL_ALLOCATED_REWARD = 1e7;
@@ -31,18 +29,17 @@ contract StakeToEarn is ReentrancyGuard {
     event Unstake(address indexed user, uint256 indexed amount);
     event Claim(address indexed user);
 
-    constructor (address stakingToken) {
-        ERC20Token = IERC20(stakingToken);
+    constructor (address erc20Token) {
+        ERC20Token = IERC20(erc20Token);
+    }
 
+    function allocateRewardToken () external {
         // Transfer tokens to this contract from the sender
         uint256 amount = TOTAL_ALLOCATED_REWARD * 10**18;
-        bool approve = ERC20Token.approve(address(this), amount);
-        if (!approve) {
-            revert Constructor_ERC20ApproveFailed();
-        }
+
         bool transfer_from = ERC20Token.transferFrom(msg.sender, address(this), amount);
         if (!transfer_from) {
-            revert Constructor_ERC20TransferFailed();
+            revert StakeToEarn_ERC20TransferFailed();
         }
     }
 

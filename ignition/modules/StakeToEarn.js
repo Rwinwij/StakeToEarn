@@ -1,9 +1,8 @@
 const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
 
-module.exports = buildModule("Apollo", (m) => {
-  const apollo = m.contract("StakeToEarn");
+module.exports = buildModule("StakeToEarnModule1", (m) => {
+  
+    const stakeToEarnContract = m.contract("StakeToEarn", ["0xd21550cA1Eb4972258eA2CEA5b5fca990D83Dc5e"]);
 
-  //m.call(apollo, "launch", []);
-
-  return { apollo };
+  return { stakeToEarnContract };
 });
