@@ -8,17 +8,18 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 error StakeToEarn_ERC20TransferFailed();
+error Constructor_ERC20ApproveFailed();
+error Constructor_ERC20TransferFailed();
 
 contract StakeToEarn is ReentrancyGuard {
     uint256 public constant TOTAL_ALLOCATED_REWARD = 1e7;
     uint256 public constant DAILY_EMISSION = 1000;
     uint256 public constant SECONDS_PER_DAY = 15; //only for testing purposes
-    // uint256 public constant SECONDS_PER_DAY = 86400; //24hours * 60 minutes * 60 seconds;
+    //uint256 public constant SECONDS_PER_DAY = 86400; //24hours * 60 minutes * 60 seconds;
     
     IERC20 public immutable ERC20Token;
     uint256 cumulativeRewardPerToken;
     uint256 lastTimeStamp;
-    uint256 public startReward; // Start of the rewards program
 
     uint256 totalStakedTokens;
 
@@ -30,9 +31,19 @@ contract StakeToEarn is ReentrancyGuard {
     event Unstake(address indexed user, uint256 indexed amount);
     event Claim(address indexed user);
 
-    constructor (address stakingToken, uint256 _startReward) {
+    constructor (address stakingToken) {
         ERC20Token = IERC20(stakingToken);
-        startReward = _startReward;
+
+        // Transfer tokens to this contract from the sender
+        uint256 amount = TOTAL_ALLOCATED_REWARD * 10**18;
+        bool approve = ERC20Token.approve(address(this), amount);
+        if (!approve) {
+            revert Constructor_ERC20ApproveFailed();
+        }
+        bool transfer_from = ERC20Token.transferFrom(msg.sender, address(this), amount);
+        if (!transfer_from) {
+            revert Constructor_ERC20TransferFailed();
+        }
     }
 
     function _cumulativeRewardPerToken () internal view returns (uint256) {
