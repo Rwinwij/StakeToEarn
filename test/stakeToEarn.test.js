@@ -4,6 +4,7 @@ const { moveBlocks } = require("./utils/move-blocks");
 const { moveTime } = require("./utils/move-time");
 
 const DAILY_EMISSION = 1000;
+const ALLOCATED_REWARDS = ethers.parseUnits("10000000",18);
 const TOKEN_DECIMALS = 18;
 const SECONDS_IN_A_DAY = 15; //hardcoded in the smart contract for demo, need to update in the future
 const SECONDS_IN_A_YEAR = SECONDS_IN_A_DAY * 365;
@@ -66,6 +67,7 @@ describe("stakeToEarn Unit Tests", function () {
       await elrondToken
         .connect(owner)
         .approve(staking.getAddress(), ethers.MaxInt256);
+
       await staking.connect(owner).stake(stakeAmount);
 
       await moveTime(SECONDS_IN_A_DAY);
@@ -105,19 +107,42 @@ describe("stakeToEarn Unit Tests", function () {
   });
 
   describe("claim", () => {
-    it("Users can claim their rewards", async () => {
-      await elrondToken.approve(staking.address, stakeAmount);
-      await staking.stake(stakeAmount);
-      await moveTime(SECONDS_IN_A_DAY);
+    it("Claimed Rewards equal to users staked balance + reward", async () => {
+      await elrondToken
+        .connect(owner)
+        .approve(staking.getAddress(), ethers.MaxInt256);
+
+      //Store some balance on the contract
+      await elrondToken
+        .connect(owner)
+        .transfer(staking.getAddress(), ALLOCATED_REWARDS);
+
+      const user_balance_before_staking = await elrondToken.connect(owner).balanceOf(owner);
+      //console.log(user_balance)
+
+      await staking.connect(owner).stake(stakeAmount);
+
+      await moveTime(SECONDS_IN_A_YEAR);
       await moveBlocks(1);
-      const earned = await staking.earned(deployer.address);
-      const balanceBefore = await elrondToken.balanceOf(deployer.address);
-      await staking.claim();
-      const balanceAfter = await elrondToken.balanceOf(deployer.address);
-      assert.equal(
-        balanceBefore.add(earned).toString(),
-        balanceAfter.toString()
-      );
+
+      /*   UNSTAKE  */
+      await staking.connect(owner).unstake(stakeAmount);
+      /*   UNSTAKE  */
+      const user_reward_at_unstake_wei = await staking
+        .connect(owner)
+        .userReward(owner.address);
+      const user_reward_at_unstake =
+        user_reward_at_unstake_wei / BigInt(10 ** TOKEN_DECIMALS);
+
+      /*   CLAIM  */
+      await staking.connect(owner).claim();
+      /*   CLAIM  */
+
+      const user_balance_after_claim = await elrondToken.connect(owner).balanceOf(owner);
+      console.log(user_balance_after_claim)
+
+      const expectedBalance = user_balance_before_staking + user_reward_at_unstake_wei;
+      expect(expectedBalance).to.equal(user_balance_after_claim);
     });
   });
 });
