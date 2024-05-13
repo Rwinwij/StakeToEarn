@@ -8,9 +8,9 @@ The same ERC-20 Token is used for staking and reward i.e ELROND (Elrond.sol).
 
 To Run and test the Demo on the front-end side, 
 
-cd frontend/stake-to-earn-frontend
+1) cd frontend/stake-to-earn-frontend
 
-npm run dev
+2) npm run dev
 
 (base) erwinwijaya@Erwins-MacBook-Pro stake-to-earn-frontend % npm run dev                   
 
