@@ -1,10 +1,10 @@
 .staked-amount {
     width: 500px;
-    background-color: white;
+    background-color: rgb(160, 177, 240);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 24px;
+    padding-top: 6px;
     padding-left: 28px;
     padding-right: 28px;
     border-top-right-radius: 12px;
@@ -19,42 +19,42 @@
     padding-bottom: 6px;
     padding-left: 28px;
     padding-right: 28px;
-    background-color: white;
+    background-color: rgb(160, 177, 240);
   }
   .earned-reward {
     width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 24px;
+    padding-bottom: 20px;
     padding-left: 28px;
     padding-right: 28px;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
-    background-color: white;
+    background-color: rgb(160, 177, 240);
   }
   .seconds-per-day {
     width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 6px;
+    padding-top: 20px;
     padding-bottom: 6px;
     padding-left: 28px;
     padding-right: 28px;
-    background-color: white;
+    background-color: rgb(160, 240, 215);
   }
   .available-token-pool {
     width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 24px;
+    padding-bottom: 2px;
     padding-left: 28px;
     padding-right: 28px;
     border-bottom-right-radius: 12px;
     border-bottom-left-radius: 12px;
-    background-color: white;
+    background-color: rgb(160, 240, 215);
   }
   .total-tokens-staked {
     width: 500px;
@@ -65,7 +65,7 @@
     padding-bottom: 6px;
     padding-left: 28px;
     padding-right: 28px;
-    background-color: white;
+    background-color: rgb(160, 240, 215);
   }  
   .top-wrapper {
     display: flex;
