@@ -32,16 +32,16 @@ const TokenApproval =()=>{
     //       toast.error("Transaction failed. Please try again.")
     //   }
     } catch (error) {
-      toast.error("Token Approval Failed");
+      toast.error("ERC-20 Token Approve Failed");
       console.error(error.message)
     }
   };
  return (
   <div>
      <form onSubmit={approveToken} className="token-amount-form">
-        <label className="token-input-label">Token Approval:</label>
+        <label className="token-input-label">Approve Token:</label>
         <input type="text" ref={approvedTokenRef} />
-        <Button onClick={approveToken} type="submit" label="Token Approval" />
+        <Button onClick={approveToken} type="submit" label="Approve Token" />
       </form>
  </div>
  )

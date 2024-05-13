@@ -2,10 +2,11 @@
 
 :root {
   font-family: "Lexend", sans-serif;
-  --primary-color: #ad00ff;
+  --primary-color: #00b894; /* Fresh green color */
   --bg-color: #f2f2f2;
   --white: #ffffff;
 }
+
 * {
   margin: 0;
   padding: 0;

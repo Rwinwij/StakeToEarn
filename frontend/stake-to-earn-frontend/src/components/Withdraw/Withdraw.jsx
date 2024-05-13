@@ -46,12 +46,12 @@ const WithdrawStakeAmount =()=>{
   };
     return (
         <form className="withdraw-form" onSubmit={withdrawStakeToken}>
-            <label>Withdraw Token:</label>
+            <label>Unstake Amount:</label>
             <input type="text" ref={withdrawStakeAmountRef} />
             <Button
             onClick={withdrawStakeToken}
             type="submit"
-            label="Withdraw Staked Token"
+            label="Unstake"
             />
       </form>
        )

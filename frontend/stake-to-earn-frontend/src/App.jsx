@@ -33,7 +33,7 @@ function App() {
                 onClick={() => handleButtonClick("withdraw")}
                 className={displaySection === "withdraw" ? "" : "active"}
               >
-                Withdraw
+                Unstake
               </button>
             </div>
             {displaySection === "stake" && (
