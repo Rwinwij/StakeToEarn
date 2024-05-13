@@ -14,9 +14,6 @@ npm run dev
 
 (base) erwinwijaya@Erwins-MacBook-Pro stake-to-earn-frontend % npm run dev                   
 
-> stake-to-earn-frontend@0.0.0 dev
-> vite
-
   VITE v5.2.11  ready in 283 ms
 
   ➜  Local:   http://localhost:5174/
