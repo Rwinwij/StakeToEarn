@@ -11,7 +11,7 @@ const TotalTokensStaked = ()=>{
     const fetchRewardRate = async()=>{
        try{
           var rewardRateWei = await stakingContract.methods.totalStakedTokens().call();
-          const rewardRateEth = ethers.formatUnits(rewardRateWei.toString(),18);
+          const rewardRateEth = ethers.formatUnits(rewardRateWei.toString(),0);
           setTotalStaked(rewardRateEth)
         }catch(error){
           toast.error("Error fetching reward rate");
