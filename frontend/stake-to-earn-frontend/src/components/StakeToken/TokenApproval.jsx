@@ -4,7 +4,7 @@ import Web3Context from "../../context/Web3Context";
 import Button from "../Button/Button";
 import { toast } from "react-hot-toast";
 const TokenApproval =()=>{
- const {stakeTokenContract,stakingContract}=useContext(Web3Context);
+ const {stakeTokenContract,stakingContract, selectedAccount}=useContext(Web3Context);
  const approvedTokenRef = useRef();
 
  const approveToken=async(e)=>{
@@ -16,7 +16,10 @@ const TokenApproval =()=>{
    }
    const amountToSend = ethers.parseUnits(amount,18).toString();
    try{
-    const transaction = await stakeTokenContract.approve(stakingContract.target,amountToSend)
+    const transaction = await stakeTokenContract.methods.
+                                                 approve(stakingContract.target,amountToSend).
+                                                 send({ from: selectedAccount });
+    
     await toast.promise(transaction.wait(),
     {
       loading: "Transaction is pending...",

@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import "./StakeToken.css";
 
 const StakeAmount =()=>{
- const {stakingContract}=useContext(Web3Context);
+ const {stakingContract,selectedAccount}=useContext(web3Context);
  const {isReload,setIsReload}=useContext(StakingContext)
  const stakeAmountRef = useRef();
 
@@ -21,7 +21,7 @@ const StakeAmount =()=>{
    }
    const amountToStake = ethers.parseUnits(amount,18).toString();
    try{
-    const transaction = await stakingContract.stake(amountToStake)
+    const transaction = await stakingContract.methods.stake(amountToStake).send({ from: selectedAccount });
     await toast.promise(transaction.wait(),
     {
       loading: "Transaction is pending...",

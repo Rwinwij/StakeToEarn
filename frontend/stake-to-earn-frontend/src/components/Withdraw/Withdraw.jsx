@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import "./Withdraw.css"
 
 const WithdrawStakeAmount =()=>{
- const {stakingContract}=useContext(Web3Context);
+ const {stakingContract,selectedAccount}=useContext(web3Context);
  const {isReload,setIsReload}=useContext(StakingContext)
  const withdrawStakeAmountRef = useRef();
 
@@ -23,7 +23,7 @@ const WithdrawStakeAmount =()=>{
    const amountToWithdraw = ethers.parseUnits(amount,18).toString();
    console.log(amountToWithdraw)
    try{
-    const transaction = await stakingContract.withdrawStakedTokens(amountToWithdraw)
+    const transaction = await stakingContract.methods.unstake(amountToWithdraw).send({ from: selectedAccount });
     await toast.promise(transaction.wait(),
     {
       loading: "Transaction is pending...",

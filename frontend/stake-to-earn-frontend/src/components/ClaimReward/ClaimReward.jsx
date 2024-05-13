@@ -5,10 +5,10 @@ import { toast } from "react-hot-toast";
 import "./ClaimReward.css"
 
 const ClaimReward = ()=>{
- const {stakingContract}=useContext(web3Context);
+  const {stakingContract,selectedAccount}=useContext(web3Context);
  const claimReward = async()=>{
   try{
-    const transaction = await stakingContract.getReward();
+    const transaction = await stakingContract.methods.claim().send({ from: selectedAccount });
     await toast.promise(transaction.wait(),
     {
       loading: "Transaction is pending...",
