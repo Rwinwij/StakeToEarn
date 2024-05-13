@@ -8,11 +8,15 @@ The same ERC-20 Token is used for staking and reward i.e ELROND (Elrond.sol).
 
 The staking contract and ERC-20 contract are deployed on ETH Sepolia Testnet.
 
-**StakeToEarn Contract address    : 0x316714f28559d3bF232e5E8A82F372C86F9Ff076**
+StakeToEarn Contract address    : 0x316714f28559d3bF232e5E8A82F372C86F9Ff076
 
-**Elrond (ERC-20) Contract address: 0xd21550cA1Eb4972258eA2CEA5b5fca990D83Dc5e**
+Elrond (ERC-20) Contract address: 0xd21550cA1Eb4972258eA2CEA5b5fca990D83Dc5e
 
-To Run and test the Demo on the front-end side, 
+**A) To Test the smart contract functionality**
+
+npx hardhat test
+
+**B)To Run and test the Demo on the front-end side**
 
 1) cd frontend/stake-to-earn-frontend
 
