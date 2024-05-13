@@ -1,16 +1,12 @@
-const { HardhatUserConfig } = require('hardhat/config');
-const dotenv = require('dotenv');
-require('@nomicfoundation/hardhat-toolbox');
-require('@nomicfoundation/hardhat-ignition');
+const { HardhatUserConfig } = require("hardhat/config");
+const dotenv = require("dotenv");
+require("hardhat-deploy");
+require("@nomicfoundation/hardhat-toolbox");
+require("@nomicfoundation/hardhat-ignition");
 
 dotenv.config();
-const {
-  RPC_SEPOLIA,
-  PRIVKEY1,
-  PRIVKEY2,
-  PRIVKEY3,
-  ETHERSCAN_APIKEY,
-} = process.env;
+const { RPC_SEPOLIA, PRIVKEY1, PRIVKEY2, PRIVKEY3, ETHERSCAN_APIKEY } =
+  process.env;
 
 const config = {
   solidity: {
@@ -26,17 +22,22 @@ const config = {
       },
     ],
   },
-  defaultNetwork: 'hardhat',
+  namedAccounts: {
+    deployer: {
+      default: 0,
+    },
+  },
+  defaultNetwork: "hardhat",
   networks: {
     sepolia: {
       chainId: 11155111,
       url: RPC_SEPOLIA,
       accounts: [`0x${process.env.PRIVKEY1}`],
-      },
     },
+  },
   etherscan: {
     apiKey: ETHERSCAN_APIKEY,
-    },
-  };
+  },
+};
 
 module.exports = config;
