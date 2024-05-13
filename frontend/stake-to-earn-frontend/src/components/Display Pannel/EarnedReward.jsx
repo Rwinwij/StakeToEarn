@@ -43,7 +43,7 @@ const EarnedReward =()=>{
   return(
     <div className="earned-reward">
       <p>Earned Reward:</p>
-      <span>{rewardVal}</span>
+      <span>{rewardVal} ELROND</span>
   </div>
   )
 }

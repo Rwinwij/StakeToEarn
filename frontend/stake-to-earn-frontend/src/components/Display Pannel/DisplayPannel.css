@@ -33,7 +33,40 @@
     border-bottom-left-radius: 12px;
     background-color: white;
   }
-  
+  .seconds-per-day {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 28px;
+    padding-right: 28px;
+    background-color: white;
+  }
+  .available-token-pool {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    padding-left: 28px;
+    padding-right: 28px;
+    border-bottom-right-radius: 12px;
+    border-bottom-left-radius: 12px;
+    background-color: white;
+  }
+  .total-tokens-staked {
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 28px;
+    padding-right: 28px;
+    background-color: white;
+  }  
   .top-wrapper {
     display: flex;
     flex-direction: column;

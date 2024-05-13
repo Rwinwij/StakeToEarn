@@ -40,7 +40,7 @@ const StakedAmount = ()=>{
 
    return(
       <div className="staked-amount">
-       <p>Staked Amount: </p> <span>{stakedAmount}</span>
+       <p>Staked Amount: </p> <span>{stakedAmount} ELROND</span>
       </div>
    )
 }
