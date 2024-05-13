@@ -14,7 +14,6 @@ const StakeAmount =()=>{
  const stakeToken=async(e)=>{
    e.preventDefault();
    const amount = stakeAmountRef.current.value.trim();
-   console.log(amount)
    if(isNaN(amount) || amount<=0){
     toast.error("Please enter a valid positive number.");
     return;
@@ -22,6 +21,7 @@ const StakeAmount =()=>{
    const amountToStake = ethers.parseUnits(amount,18).toString();
    try{
     const transaction = await stakingContract.methods.stake(amountToStake).send({ from: selectedAccount });
+    console.log("Erwin Debug###########: amountToStake = ",amountToStake);
     await toast.promise(transaction.wait(),
     {
       loading: "Transaction is pending...",

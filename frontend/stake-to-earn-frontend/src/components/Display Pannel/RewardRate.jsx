@@ -12,7 +12,6 @@ const RewardRate = ()=>{
        try{
           var rewardRateWei = await stakingContract.methods.DAILY_EMISSION().call();
           rewardRateWei = Number(rewardRateWei);
-          console.log (rewardRateWei)
           const rewardRateEth = ethers.formatUnits(rewardRateWei.toString(),0);
           setRewardRate(rewardRateEth)
         }catch(error){

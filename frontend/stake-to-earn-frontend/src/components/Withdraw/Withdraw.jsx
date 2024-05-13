@@ -15,13 +15,11 @@ const WithdrawStakeAmount =()=>{
  const withdrawStakeToken=async(e)=>{
    e.preventDefault();
    const amount = withdrawStakeAmountRef.current.value.trim();
-   console.log(amount)
    if(isNaN(amount) || amount<=0){
     console.error("Please enter a valid positive number");
     return;
    }
    const amountToWithdraw = ethers.parseUnits(amount,18).toString();
-   console.log(amountToWithdraw)
    try{
     const transaction = await stakingContract.methods.unstake(amountToWithdraw).send({ from: selectedAccount });
     await toast.promise(transaction.wait(),

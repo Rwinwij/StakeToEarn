@@ -3,6 +3,5 @@ export const handleChainChange=async(setState)=>{
         {method:'eth_chainId'}
     )
     const chainId = parseInt(chainIdHex,16);
-    console.log(chainId)
     setState(prevState=>({...prevState,chainId}))
 }

@@ -604,9 +604,6 @@ export const connectWallet = async()=>{
        const stakingContract = new web3.eth.Contract(STAKE_TO_EARN_ABI, StakeToEarnAddress);
        const stakeTokenContract = new web3.eth.Contract(ELROND_ABI, ElrondAddress);
 
-       console.log(stakingContract)
-       console.log(stakeTokenContract)
-
        return {provider,selectedAccount,stakeTokenContract,stakingContract,chainId}
 
     }catch(error){

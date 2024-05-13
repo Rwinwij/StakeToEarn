@@ -15,7 +15,6 @@ const TokenApproval =()=>{
     return;
    }
    const amountToSend = ethers.parseUnits(amount,18).toString();
-   console.log (stakingContract._address)
    try{
     const transaction = await stakeTokenContract.methods.
                                                  approve(stakingContract._address,amountToSend).

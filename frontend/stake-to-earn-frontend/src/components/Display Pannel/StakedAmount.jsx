@@ -16,7 +16,6 @@ const StakedAmount = ()=>{
         try{
            var amountStakedWei = await stakingContract.methods.userTokenBalance(selectedAccount).call();
            amountStakedWei = Number(amountStakedWei);
-           console.log (amountStakedWei)
            const amountStakedEth = ethers.formatUnits(amountStakedWei.toString(),18);
            setStakedAmount(amountStakedEth)
         }catch(error){
