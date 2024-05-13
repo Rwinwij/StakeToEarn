@@ -10,7 +10,7 @@ const RewardRate = ()=>{
   useEffect(()=>{
     const fetchRewardRate = async()=>{
        try{
-          const rewardRateWei = await stakingContract.DAILY_EMISSION();
+          const rewardRateWei = await stakingContract.methods.DAILY_EMISSION().call();
           const rewardRateEth = ethers.formatUnits(rewardRateWei.toString(),18);
           setRewardRate(rewardRateEth)
         }catch(error){

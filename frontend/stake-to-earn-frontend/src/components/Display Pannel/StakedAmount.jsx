@@ -14,7 +14,7 @@ const StakedAmount = ()=>{
    useEffect(()=>{
      const fetchStakedBalance = async()=>{
         try{
-           const amountStakedWei = await stakingContract.userTokenBalance(selectedAccount)
+           const amountStakedWei = await stakingContract.methods.userTokenBalance(selectedAccount).call();
            const amountStakedEth = ethers.formatUnits(amountStakedWei.toString(),18);
            setStakedAmount(amountStakedEth)
         }catch(error){

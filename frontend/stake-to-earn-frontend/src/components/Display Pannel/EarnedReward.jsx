@@ -11,7 +11,7 @@ const EarnedReward =()=>{
     const fetchStakeRewardInfo =async()=>{
         try{
           //fetching earned amount of a user
-           const rewardValueWei = await stakingContract.userReward(selectedAccount);
+           const rewardValueWei = await stakingContract.methods.userReward(selectedAccount).call();
            const rewardValueEth = ethers.formatUnits(rewardValueWei,18).toString();
            const roundedReward = parseFloat(rewardValueEth).toFixed(2)
            setRewardVal(roundedReward)
