@@ -11,19 +11,26 @@ const EarnedReward =()=>{
     const fetchStakeRewardInfo =async()=>{
         try{
           //fetching earned amount of a user
-           const rewardValueWei = await stakingContract.methods.userReward(selectedAccount).call();
-           const rewardValueEth = ethers.formatUnits(rewardValueWei,18).toString();
-           const roundedReward = parseFloat(rewardValueEth).toFixed(2)
-           setRewardVal(roundedReward)
+          var rewardValueWei = await stakingContract.methods.userReward(selectedAccount).call();
+          rewardValueWei = Number(rewardValueWei);
+          console.log (rewardValueWei)
+          const roundedReward = ethers.formatUnits(rewardValueWei.toString(),0);
+          setRewardVal(roundedReward)
+          
         }catch(error){
           toast.error("Error fetching the reward:");
           console.error(error.message)
         }
       }
-        const interval = setInterval(()=>{
-          stakingContract && fetchStakeRewardInfo();
-        },20000)
-        return ()=> clearInterval(interval)
+      // Set up interval to fetch user reward every 5 seconds
+      const intervalId = setInterval(async () => {
+        if (stakingContract) {
+          fetchStakeRewardInfo();
+        }
+      }, 5000);
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
   },[stakingContract,selectedAccount])
 
   return(

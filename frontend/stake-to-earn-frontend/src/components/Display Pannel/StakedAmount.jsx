@@ -14,7 +14,9 @@ const StakedAmount = ()=>{
    useEffect(()=>{
      const fetchStakedBalance = async()=>{
         try{
-           const amountStakedWei = await stakingContract.methods.userTokenBalance(selectedAccount).call();
+           var amountStakedWei = await stakingContract.methods.userTokenBalance(selectedAccount).call();
+           amountStakedWei = Number(amountStakedWei);
+           console.log (amountStakedWei)
            const amountStakedEth = ethers.formatUnits(amountStakedWei.toString(),18);
            setStakedAmount(amountStakedEth)
         }catch(error){
@@ -24,7 +26,7 @@ const StakedAmount = ()=>{
      }
      stakingContract && fetchStakedBalance()
 
-     // Set up interval to fetch staked balance every 30 seconds (adjust as needed)
+     // Set up interval to fetch staked balance every 5 seconds
     const intervalId = setInterval(async () => {
       if (stakingContract) {
         fetchStakedBalance();
