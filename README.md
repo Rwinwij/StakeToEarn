@@ -24,7 +24,7 @@ To Run and test the Demo on the front-end side,
 
   ➜  Local:   http://localhost:5174/
 
-Once we can launch the dapp http://localhost:5174/ on our browser, it will look like this. 
+Once we can launch the dapp on our browser, it will look like this. 
 
 <img width="804" alt="Dapp staking" src="https://github.com/Rwinwij/StakeToEarn/assets/101325807/33172829-ebdd-4d7d-923e-a139919a9782">
 
