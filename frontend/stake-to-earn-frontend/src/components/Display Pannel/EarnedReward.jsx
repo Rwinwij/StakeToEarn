@@ -11,10 +11,18 @@ const EarnedReward =()=>{
     const fetchStakeRewardInfo =async()=>{
         try{
           //fetching earned amount of a user
-          var rewardValueWei = await stakingContract.methods.userReward(selectedAccount).call();
-          rewardValueWei = Number(rewardValueWei);
-          const roundedReward = ethers.formatUnits(rewardValueWei.toString(),0);
-          setRewardVal(roundedReward)
+          var userReward = await stakingContract.methods.userReward(selectedAccount).call();
+          userReward = ethers.formatUnits(userReward,18).toString();
+          console.log(userReward)
+
+          var userUnclaimedReward = await stakingContract.methods.reward(selectedAccount).call();
+          userUnclaimedReward = ethers.formatUnits(userUnclaimedReward,18).toString();
+          console.log(userUnclaimedReward)
+
+          const userTotalReward = parseFloat(userReward) + parseFloat(userUnclaimedReward);
+          console.log(userTotalReward)
+
+          setRewardVal(userTotalReward)
 
         }catch(error){
           toast.error("Error fetching the reward:");

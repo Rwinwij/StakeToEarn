@@ -16,7 +16,7 @@ const StakedAmount = ()=>{
         try{
            var amountStakedWei = await stakingContract.methods.userTokenBalance(selectedAccount).call();
            amountStakedWei = Number(amountStakedWei);
-           const amountStakedEth = ethers.formatUnits(amountStakedWei.toString(),18);
+           const amountStakedEth = ethers.formatUnits(amountStakedWei.toString(),0);
            setStakedAmount(amountStakedEth)
         }catch(error){
          toast.error("Error fetching user staked amount");

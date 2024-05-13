@@ -12,12 +12,12 @@ error StakeToEarn_ERC20TransferFailed();
 contract StakeToEarn is ReentrancyGuard {
     uint256 public constant TOTAL_ALLOCATED_REWARD = 1e7;
     uint256 public constant DAILY_EMISSION = 1000;
+    uint256 public constant ERC20_DECIMALS = 1e18;
     uint256 public constant SECONDS_PER_DAY = 15; //only for testing purposes
     //uint256 public constant SECONDS_PER_DAY = 86400; //24hours * 60 minutes * 60 seconds;
 
     IERC20 public immutable ERC20Token;
-    uint256 public immutable ERC20Decimals;
-
+    
     /** Declare all as PUBLIC for easier debugging, once stable will change to private/internal */
     uint256 public cumulativeRewardPerToken; //scaled by erc-20 decimals for precision
     uint256 public lastTimeStamp;
@@ -34,12 +34,11 @@ contract StakeToEarn is ReentrancyGuard {
 
     constructor (address erc20Token) {
         ERC20Token = IERC20(erc20Token);
-        ERC20Decimals = 10 ** ERC20Token.decimals();
     }
 
     function allocateRewardToken () external {
         // Transfer tokens to this contract from the sender
-        uint256 amount = TOTAL_ALLOCATED_REWARD * ERC20Decimals;
+        uint256 amount = TOTAL_ALLOCATED_REWARD * ERC20_DECIMALS;
 
         bool transfer_from = ERC20Token.transferFrom(msg.sender, address(this), amount);
         if (!transfer_from) {
@@ -53,7 +52,7 @@ contract StakeToEarn is ReentrancyGuard {
         }
 
         return cumulativeRewardPerToken + 
-               (block.timestamp - lastTimeStamp) * DAILY_EMISSION * ERC20Decimals / 
+               (block.timestamp - lastTimeStamp) * DAILY_EMISSION * ERC20_DECIMALS / 
                (SECONDS_PER_DAY * totalStakedTokens);
     }
 
@@ -70,7 +69,7 @@ contract StakeToEarn is ReentrancyGuard {
         userTokenBalance[msg.sender] += amount;
         totalStakedTokens += amount;
         //transfer the ERC20 token from the user to this contract
-        bool success = ERC20Token.transferFrom(msg.sender, address(this), amount*ERC20Decimals);
+        bool success = ERC20Token.transferFrom(msg.sender, address(this), amount*ERC20_DECIMALS);
         if (!success) {
             revert StakeToEarn_ERC20TransferFailed();
         }
@@ -81,7 +80,7 @@ contract StakeToEarn is ReentrancyGuard {
     function unstake (uint256 amount) external updateReward(msg.sender) nonReentrant {
         userTokenBalance[msg.sender] -= amount;
         totalStakedTokens -= amount;
-        bool success = ERC20Token.transfer(msg.sender, amount*ERC20Decimals);
+        bool success = ERC20Token.transfer(msg.sender, amount*ERC20_DECIMALS);
         if (!success) {
             revert StakeToEarn_ERC20TransferFailed();
         }
