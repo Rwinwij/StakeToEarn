@@ -17,7 +17,5 @@ npm run dev
   VITE v5.2.11  ready in 283 ms
 
   ➜  Local:   http://localhost:5174/
-  ➜  Network: use --host to expose
-  ➜  press h + enter to show help
 
 We can launch the dapp on the browser http://localhost:5174/
