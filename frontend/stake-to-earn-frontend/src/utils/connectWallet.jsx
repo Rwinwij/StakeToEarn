@@ -1,6 +1,10 @@
-import {ethers,Contract} from "ethers";
-import stakingAbi from "../ABI/StakeToEarn.json"
-import stakeTokenAbi from "../ABI/Elrond.json";
+import {ethers} from "ethers";
+import STAKE_TO_EARN_ABI from "../ABI/StakeToEarn.json"
+import ELROND_ABI from "../ABI/Elrond.json";
+
+import { Web3 } from 'web3';
+
+const web3 = new Web3('https://ethereum-sepolia.publicnode.com');
 
 export const connectWallet = async()=>{
     try{
@@ -28,10 +32,10 @@ export const connectWallet = async()=>{
        const StakeToEarnAddress="0xF85ea780B58438b47c92095a8C94110E31907dE0"
        const ElrondAddress="0xd21550cA1Eb4972258eA2CEA5b5fca990D83Dc5e"
 
-       stakingContract= new Contract(StakeToEarnAddress,stakingAbi,signer);
-       stakeTokenContract=new Contract(ElrondAddress,stakeTokenAbi,signer);
+       const stakeToEarnContract = new web3.eth.Contract(STAKE_TO_EARN_ABI, StakeToEarnAddress);
+       const elrondContract = new web3.eth.Contract(ELROND_ABI, ElrondAddress);
 
-       return {provider,selectedAccount,stakeTokenContract,stakingContract,chainId}
+       return {provider,selectedAccount,elrondContract,stakeToEarnContract,chainId}
 
     }catch(error){
         console.error(error);
