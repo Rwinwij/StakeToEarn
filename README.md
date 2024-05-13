@@ -12,6 +12,10 @@ The staking contract and ERC-20 contract are deployed on ETH Sepolia Testnet.
 
 **Elrond (ERC-20) Contract address: 0xd21550cA1Eb4972258eA2CEA5b5fca990D83Dc5e**
 
+To test the smart contract functionality run:
+
+npx hardhat test
+
 To Run and test the Demo on the front-end side, 
 
 1) cd frontend/stake-to-earn-frontend
