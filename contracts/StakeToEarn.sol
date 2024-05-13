@@ -21,9 +21,9 @@ contract StakeToEarn is ReentrancyGuard {
 
     uint256 totalStakedTokens;
 
-    mapping (address => uint256) userTokenBalance;
-    mapping (address => uint256) userReward;
-    mapping (address => uint256) rewardPerTokenPaid;
+    mapping (address => uint256) public userTokenBalance;
+    mapping (address => uint256) public userReward;
+    mapping (address => uint256) public rewardPerTokenPaid;
 
     event Stake(address indexed user, uint256 indexed amount);
     event Unstake(address indexed user, uint256 indexed amount);
