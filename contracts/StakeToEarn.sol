@@ -14,16 +14,19 @@ contract StakeToEarn is ReentrancyGuard {
     uint256 public constant DAILY_EMISSION = 1000;
     uint256 public constant SECONDS_PER_DAY = 15; //only for testing purposes
     //uint256 public constant SECONDS_PER_DAY = 86400; //24hours * 60 minutes * 60 seconds;
-    
-    IERC20 public immutable ERC20Token;
-    uint256 cumulativeRewardPerToken;
-    uint256 lastTimeStamp;
 
-    uint256 totalStakedTokens;
+    IERC20 public immutable ERC20Token;
+    uint256 public immutable ERC20Decimals;
+
+    /** Declare all as PUBLIC for easier debugging, once stable will change to private/internal */
+    uint256 public cumulativeRewardPerToken; //scaled by erc-20 decimals for precision
+    uint256 public lastTimeStamp;
+    uint256 public totalStakedTokens;
 
     mapping (address => uint256) public userTokenBalance;
-    mapping (address => uint256) public userReward;
-    mapping (address => uint256) public rewardPerTokenPaid;
+    mapping (address => uint256) public userReward; //scaled by erc-20 decimals for precision
+    mapping (address => uint256) public lastRewardPerToken; //scaled by erc-20 decimals for precision
+    /** ************************************************************************************ */
 
     event Stake(address indexed user, uint256 indexed amount);
     event Unstake(address indexed user, uint256 indexed amount);
@@ -31,11 +34,12 @@ contract StakeToEarn is ReentrancyGuard {
 
     constructor (address erc20Token) {
         ERC20Token = IERC20(erc20Token);
+        ERC20Decimals = 10 ** ERC20Token.decimals();
     }
 
     function allocateRewardToken () external {
         // Transfer tokens to this contract from the sender
-        uint256 amount = TOTAL_ALLOCATED_REWARD * 10**18;
+        uint256 amount = TOTAL_ALLOCATED_REWARD * ERC20Decimals;
 
         bool transfer_from = ERC20Token.transferFrom(msg.sender, address(this), amount);
         if (!transfer_from) {
@@ -49,7 +53,7 @@ contract StakeToEarn is ReentrancyGuard {
         }
 
         return cumulativeRewardPerToken + 
-               (block.timestamp - lastTimeStamp) * DAILY_EMISSION * 1e18 / 
+               (block.timestamp - lastTimeStamp) * DAILY_EMISSION * ERC20Decimals / 
                (SECONDS_PER_DAY * totalStakedTokens);
     }
 
@@ -57,7 +61,7 @@ contract StakeToEarn is ReentrancyGuard {
         cumulativeRewardPerToken = _cumulativeRewardPerToken();  
         lastTimeStamp = block.timestamp;
         userReward[account] += reward(account);
-        rewardPerTokenPaid[account] = cumulativeRewardPerToken; //update the last accumulated reward per token paid to the staker
+        lastRewardPerToken[account] = cumulativeRewardPerToken; //update the last accumulated reward per token paid to the staker
         _;
     }
 
@@ -66,7 +70,7 @@ contract StakeToEarn is ReentrancyGuard {
         userTokenBalance[msg.sender] += amount;
         totalStakedTokens += amount;
         //transfer the ERC20 token from the user to this contract
-        bool success = ERC20Token.transferFrom(msg.sender, address(this), amount);
+        bool success = ERC20Token.transferFrom(msg.sender, address(this), amount*ERC20Decimals);
         if (!success) {
             revert StakeToEarn_ERC20TransferFailed();
         }
@@ -77,7 +81,7 @@ contract StakeToEarn is ReentrancyGuard {
     function unstake (uint256 amount) external updateReward(msg.sender) nonReentrant {
         userTokenBalance[msg.sender] -= amount;
         totalStakedTokens -= amount;
-        bool success = ERC20Token.transfer(msg.sender, amount);
+        bool success = ERC20Token.transfer(msg.sender, amount*ERC20Decimals);
         if (!success) {
             revert StakeToEarn_ERC20TransferFailed();
         }
@@ -86,8 +90,8 @@ contract StakeToEarn is ReentrancyGuard {
 
     //rewards function that returns the rewards that hasn’t been claimed by a user
     function reward(address account) public view returns (uint256) {
-        uint256 unclaimedRewardPerToken = _cumulativeRewardPerToken() - rewardPerTokenPaid[account];
-        return (userTokenBalance[account] * unclaimedRewardPerToken) / 1e18;
+        uint256 unclaimedRewardPerToken = _cumulativeRewardPerToken() - lastRewardPerToken[account];
+        return (userTokenBalance[account] * unclaimedRewardPerToken);
     }
 
     //claim function to claim the rewards from the allocated rewards token
@@ -95,7 +99,7 @@ contract StakeToEarn is ReentrancyGuard {
         uint256 user_reward = userReward[msg.sender];
         userReward[msg.sender] = 0; //update the user reward before transfer to prevent re-entrancy attack
         emit Claim(msg.sender);
-        bool success = ERC20Token.transfer(msg.sender, user_reward);
+        bool success = ERC20Token.transfer(msg.sender, user_reward); //user reward is already scaled by 18 decimals for precision
         if (!success) {
             revert StakeToEarn_ERC20TransferFailed();
         }

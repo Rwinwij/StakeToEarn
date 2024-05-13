@@ -164,7 +164,7 @@
         "type": "address"
       }
     ],
-    "name": "rewardPerTokenPaid",
+    "name": "lastRewardPerToken",
     "outputs": [
       {
         "internalType": "uint256",

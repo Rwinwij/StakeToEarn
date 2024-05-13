@@ -35,7 +35,7 @@ const TokenApproval =()=>{
     //       toast.error("Transaction failed. Please try again.")
     //   }
     } catch (error) {
-      toast.error("ERC-20 Token Approve Failed");
+      //toast.error("ERC-20 Token Approve Failed");
       console.error(error.message)
     }
   };

@@ -18,7 +18,7 @@ const StakeAmount =()=>{
     toast.error("Please enter a valid positive number.");
     return;
    }
-   const amountToStake = ethers.parseUnits(amount,18).toString();
+   const amountToStake = ethers.parseUnits(amount,0).toString();
    try{
     const transaction = await stakingContract.methods.stake(amountToStake).send({ from: selectedAccount });
     console.log("Erwin Debug###########: amountToStake = ",amountToStake);

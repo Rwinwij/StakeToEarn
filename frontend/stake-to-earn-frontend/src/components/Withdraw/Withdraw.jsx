@@ -19,7 +19,7 @@ const WithdrawStakeAmount =()=>{
     console.error("Please enter a valid positive number");
     return;
    }
-   const amountToWithdraw = ethers.parseUnits(amount,18).toString();
+   const amountToWithdraw = ethers.parseUnits(amount,0).toString();
    try{
     const transaction = await stakingContract.methods.unstake(amountToWithdraw).send({ from: selectedAccount });
     await toast.promise(transaction.wait(),

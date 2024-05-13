@@ -165,7 +165,7 @@ const STAKE_TO_EARN_ABI = [
           "type": "address"
         }
       ],
-      "name": "rewardPerTokenPaid",
+      "name": "lastRewardPerToken",
       "outputs": [
         {
           "internalType": "uint256",
