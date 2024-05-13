@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import "./StakeToken.css";
 
 const StakeAmount =()=>{
- const {stakingContract,selectedAccount}=useContext(web3Context);
+ const {stakingContract,selectedAccount}=useContext(Web3Context);
  const {isReload,setIsReload}=useContext(StakingContext)
  const stakeAmountRef = useRef();
 

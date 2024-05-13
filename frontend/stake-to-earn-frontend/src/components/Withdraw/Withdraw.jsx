@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import "./Withdraw.css"
 
 const WithdrawStakeAmount =()=>{
- const {stakingContract,selectedAccount}=useContext(web3Context);
+ const {stakingContract,selectedAccount}=useContext(Web3Context);
  const {isReload,setIsReload}=useContext(StakingContext)
  const withdrawStakeAmountRef = useRef();
 
