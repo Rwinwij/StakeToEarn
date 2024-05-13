@@ -5,3 +5,22 @@ StakeToEarn is a staking contract which rewards stakers with rewards.
 The same ERC-20 Token is used for staking and reward i.e ELROND (Elrond.sol).
 
 10.000.000 reward tokens are allocated with a daily emission of 1000 token.
+
+To Run and test the Demo on the front-end side, 
+
+cd frontend/stake-to-earn-frontend
+
+npm run dev
+
+(base) erwinwijaya@Erwins-MacBook-Pro stake-to-earn-frontend % npm run dev                   
+
+> stake-to-earn-frontend@0.0.0 dev
+> vite
+
+  VITE v5.2.11  ready in 283 ms
+
+  ➜  Local:   http://localhost:5174/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+
+We can launch the dapp on the browser http://localhost:5174/
