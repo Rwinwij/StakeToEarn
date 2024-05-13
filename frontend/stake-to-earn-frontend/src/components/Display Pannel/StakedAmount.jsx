@@ -23,7 +23,19 @@ const StakedAmount = ()=>{
         }
      }
      stakingContract && fetchStakedBalance()
+
+     // Set up interval to fetch staked balance every 30 seconds (adjust as needed)
+    const intervalId = setInterval(async () => {
+      if (stakingContract) {
+        fetchStakedBalance();
+      }
+    }, 5000);
+
+    // Clean up interval on component unmount
+    return () => clearInterval(intervalId);
+
    },[stakingContract,selectedAccount,isReload])
+   
 
    return(
       <div className="staked-amount">

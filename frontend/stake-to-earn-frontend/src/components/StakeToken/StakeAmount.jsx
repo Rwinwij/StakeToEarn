@@ -37,7 +37,7 @@ const StakeAmount =()=>{
     //       toast.error("Transaction failed. Please try again.")
     //   }
     } catch (error) {
-      toast.error("Staking Failed");
+      //toast.error("Staking Error");
       console.error(error.message)
     }
   };

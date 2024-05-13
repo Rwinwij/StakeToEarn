@@ -10,8 +10,10 @@ const RewardRate = ()=>{
   useEffect(()=>{
     const fetchRewardRate = async()=>{
        try{
-          const rewardRateWei = await stakingContract.methods.DAILY_EMISSION().call();
-          const rewardRateEth = ethers.formatUnits(rewardRateWei.toString(),18);
+          var rewardRateWei = await stakingContract.methods.DAILY_EMISSION().call();
+          rewardRateWei = Number(rewardRateWei);
+          console.log (rewardRateWei)
+          const rewardRateEth = ethers.formatUnits(rewardRateWei.toString(),0);
           setRewardRate(rewardRateEth)
         }catch(error){
           toast.error("Error fetching reward rate");
@@ -24,7 +26,7 @@ const RewardRate = ()=>{
   return(
     <div className="reward-rate">
       <p>Reward Rate:</p>
-      <span>{rewardRate} token/sec </span>
+      <span>{rewardRate} token/day </span>
   </div>
   )
 }
