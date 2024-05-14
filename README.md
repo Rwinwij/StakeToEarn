@@ -32,3 +32,6 @@ Once we can launch the dapp on our browser, it will look like this.
 
 <img width="804" alt="Dapp staking" src="https://github.com/Rwinwij/StakeToEarn/assets/101325807/33172829-ebdd-4d7d-923e-a139919a9782">
 
+Here is the demo video of the dapp:
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/25Gv1QNURBE/0.jpg)](https://www.youtube.com/watch?v=25Gv1QNURBE)
